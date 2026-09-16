@@ -1,8 +1,10 @@
-<div align="center">
-  <img src="assets/icon.png" alt="ArmyOfTwoRecomp" width="480" align="right">
-</div>
-
 # Army Of Two XBOX360 Recompilation
+
+<img src="assets/icon.png"
+     alt="Army of Two"
+     width="400"
+     align="right"
+     style="margin-left: 24px;">
 
 A static recompilation of [**Army of Two**](https://en.wikipedia.org/wiki/Army_of_Two) (2006, Volition Games, Xbox 360;
 Title ID `4541084C`, retail hash `AA1EA03FEC9A549C`) to native Windows x86-64,
@@ -13,6 +15,7 @@ Static recompilation translates the Xbox 360 PowerPC code inside the game's
 emulator and no interpreter in the loop; file I/O, GPU commands, audio and
 threading go through the ReXGlue runtime.
 
+<br clear="right">
 
 ## Status
 
