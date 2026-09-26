@@ -7,8 +7,16 @@
      style="margin-left: 24px;">
 
 A static recompilation of [**Army of Two**](https://en.wikipedia.org/wiki/Army_of_Two) (2006, Volition Games, Xbox 360;
-Title ID `4541084C`, retail hash `AA1EA03FEC9A549C`) to native Windows x86-64,
+**USA release, Title ID `454107F8`**) to native Windows x86-64,
 built on the [ReXGlue SDK](https://github.com/rexglue/rexglue-sdk).
+
+This is [nikolaygorb/ArmyOfTwoRecomp](https://github.com/nikolaygorb/ArmyOfTwoRecomp)
+(Europe, `4541084C`) retargeted to the USA disc. The two `default.xex` files
+have the same function layout (`.pdata` is byte-identical, same entry point
+`0x82A3C128`) but a different `.rdata` layout, so ~55 700 instructions carry
+different data addresses: a build made from one XEX cannot run the other.
+Codegen on the USA `default.xex` with the same `default_functions.toml` gives
+a USA build; no guest code overrides are needed.
 
 Static recompilation translates the Xbox 360 PowerPC code inside the game's
 `default.xex` into native C++ that compiles and runs on a PC. There is no
@@ -63,9 +71,13 @@ Target retail release (verify your dump matches):
 
 | Field | Value |
 |---|---|
-| Title ID | `4541084C` |
-| Module Hash | `AA1EA03FEC9A549C` |
-| Media ID | `7E3E9BEA` |
+| Disc | Army of Two (USA) |
+| Title ID | `454107F8` |
+| Media ID | `38595BF0` |
+| `default.xex` SHA-1 | `0228895185EB2F1750C4B729F6CB73C36E82816A` |
+
+The Europe disc (`4541084C`, Media ID `7E3E9BEA`) needs the upstream
+project instead: the recompiled code is tied to one XEX.
 
 ## Build
 

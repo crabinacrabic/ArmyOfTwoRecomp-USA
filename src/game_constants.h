@@ -17,7 +17,8 @@ namespace GameConstants::PatchConstants
     std::uint32_t value;
   };
 
-  // Ported from xenia-canary game-patches for Army of Two retail (4541084C)
+  // Ported from xenia-canary game-patches for Army of Two retail (EU 4541084C);
+  // the addresses are the same in the USA XEX (454107F8), checked against both images.
   // NOPs the frame-limiter check; game speed is tied to FPS above ~90FPS.
   constexpr Patch FpsUnlockNop()
   {
