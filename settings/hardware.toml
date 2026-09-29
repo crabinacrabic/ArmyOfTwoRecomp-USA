@@ -77,8 +77,9 @@ gpu_allow_invalid_fetch_constants = true
 #perf_log_csv = "benchmark.csv"
 
 # Enable runtime debug tools (stub sweep, missing function scan).
-# Produces logs/missed_functions.txt and logs/stub_sweep.txt.
-dev_debug_runtime = true
+# Produces logs/missed_functions.txt (~97 MB) and logs/stub_sweep.txt. Off by
+# default: the US build has never hit a stub, and the scan slows every start.
+dev_debug_runtime = false
 
 # Ported from xenia-canary game-patches for Army of Two (4541084C)
 # https://github.com/xenia-canary/game-patches/blob/main/patches/4541084C%20-%20Army%20of%20Two%20(Europe).patch.toml
