@@ -26,10 +26,11 @@ namespace game_fixes
   // rex::input::InputSystem has no lock: GetState / GetCapabilities / SetState
   // each re-enumerate the devices and rebuild InputSystem::devices_
   // (std::vector<DeviceInfo>, with heap-allocated name/guid strings). The game
-  // reaches the XamInput* imports from several call sites, and with a pad
-  // connected it crashed after a few seconds to minutes with ntdll heap failure
-  // 0xC0000374, type 8 (block not busy = double free) in
-  // InputSystem::RefreshDevices <- GetState <- XamInputGetState.
+  // reaches the XamInput* imports from several call sites. With a pad
+  // connected it crashed once, ~45 s in, with ntdll heap failure 0xC0000374,
+  // type 8 (block not busy = double free) in
+  // InputSystem::RefreshDevices <- GetState <- XamInputGetState. The race is
+  // timing-dependent: most runs never hit it.
   //
   // The three XDK wrappers below are the only guest code that calls the
   // XamInput* imports, so one lock around them serializes every guest call.
