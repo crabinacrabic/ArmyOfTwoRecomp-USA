@@ -46,6 +46,7 @@ clean base does not have.
 armyoftworecomp_manifest.toml   codegen manifest (includes default_functions.toml)
 default_functions.toml          extra function entries found by stub sweeps
 src/armyoftworecomp_app.h       ReXApp: paths (<repo>/assets), settings files
+src/game_fixes.h                guest overrides (strong sub_XXXXXXXX); XInput calls serialized (SDK InputSystem has no lock)
 src/game_patches.h, game_constants.h   xenia-canary patches (FPS unlock, MSAA, AF); addresses valid for EU and USA
 src/debug_tools.h               stub sweep / missed-function scan (dev_debug_runtime)
 settings/                       hardware.toml (SDK config), mapping.toml (input)
