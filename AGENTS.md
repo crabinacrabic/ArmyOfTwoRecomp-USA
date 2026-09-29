@@ -13,11 +13,10 @@ The EU and USA `default.xex` have the same functions at the same addresses
 55 700 instructions hold different data addresses, so a build is tied to one
 XEX. Codegen on the USA XEX with the same `default_functions.toml` is the port.
 
-The earlier attempt (SDK 0.8 and 0.10 with ~100 hand patches, edits inside
-`generated/`) is kept in the branches `legacy-v0.8-hacks`, `clean-v0.10`,
-`feat/cpu-idle-timing-hooks` (last snapshot `e73ca24`) and on the `legacy`
-remote. Do not port its patches blindly: most worked around problems this
-clean base does not have.
+An earlier attempt at the USA disc (SDK 0.8 and 0.10 with ~100 hand patches,
+edits inside `generated/`) is kept privately by the maintainer and is not part
+of this repository. Do not port its patches blindly: most worked around
+problems this clean base does not have.
 
 ## Rules
 
