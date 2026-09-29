@@ -14,7 +14,8 @@ gpu_plugin = "xenos"
 # "d3d12" / "vulkan"
 graphics_backend = "any"
 vsync = false
-resolution_scale = 2
+# 1 = native 720p. At 2 the UE3 bloom / light shafts blow out (blinding light).
+resolution_scale = 1
 async_shader_compilation = true
 native_2x_msaa = false
 anisotropic_override = 3
@@ -24,6 +25,12 @@ texture_cache_memory_limit_hard = 4096
 clear_memory_page_state = true
 readback_memexport = true
 readback_memexport_fast = true
+# UE3 reads resolved render targets on the CPU (HDR eye adaptation). Without
+# readback the exposure never settles and the image is washed out / overbright.
+# Same fix as xenia-manager's optimized settings for 454107F8 ("Fixes the
+# bright bloom"); xenia game-compatibility #167 is tagged gpu-readback.
+# none | fast (previous frame, no stalls) | some | full (sync, stalls)
+readback_resolve = "fast"
 host_present_from_non_ui_thread	= true
 
 window_width = 1920
@@ -32,7 +39,10 @@ fullscreen = true
 monitor = 0
 resolution = "1920x1080"
 
-render_target_path_d3d12 = "rtv"
+# "rov" emulates eDRAM blending and the 7e3 HDR / gamma render-target formats
+# exactly; "rtv" is faster but approximates them.
+render_target_path_d3d12 = "rov"
+gamma_render_target_as_unorm16 = true
 store_shaders = true
 present_letterbox = true
   
