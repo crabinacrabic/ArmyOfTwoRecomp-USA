@@ -6,17 +6,23 @@
      align="right"
      style="margin-left: 24px;">
 
-A static recompilation of [**Army of Two**](https://en.wikipedia.org/wiki/Army_of_Two) (2006, Volition Games, Xbox 360;
+A static recompilation of [**Army of Two**](https://en.wikipedia.org/wiki/Army_of_Two) (2008, EA Montreal / Electronic Arts, Xbox 360;
 **USA release, Title ID `454107F8`**) to native Windows x86-64,
 built on the [ReXGlue SDK](https://github.com/rexglue/rexglue-sdk).
 
-This is [nikolaygorb/ArmyOfTwoRecomp](https://github.com/nikolaygorb/ArmyOfTwoRecomp)
-(Europe, `4541084C`) retargeted to the USA disc. The two `default.xex` files
+**Based on [nikolaygorb/ArmyOfTwoRecomp](https://github.com/nikolaygorb/ArmyOfTwoRecomp)
+by [nikolaygorb](https://github.com/nikolaygorb)**, the original recompilation
+of the Europe release (`4541084C`). The codegen setup, `default_functions.toml`,
+the app, the settings and the game patches are his work; this repository keeps
+his commit history and adds the USA retarget and the fixes listed under
+[Status](#status).
+
+The USA disc needs its own build. The two `default.xex` files
 have the same function layout (`.pdata` is byte-identical, same entry point
 `0x82A3C128`) but a different `.rdata` layout, so ~55 700 instructions carry
 different data addresses: a build made from one XEX cannot run the other.
 Codegen on the USA `default.xex` with the same `default_functions.toml` gives
-a USA build; no guest code overrides are needed.
+a USA build; no retarget-specific guest overrides are needed.
 
 Static recompilation translates the Xbox 360 PowerPC code inside the game's
 `default.xex` into native C++ that compiles and runs on a PC. There is no
@@ -27,8 +33,17 @@ threading go through the ReXGlue runtime.
 
 ## Status
 
-Everything works smoothly - codegen runs clean, the build compiles, and the
-executable boots to real GPU rendering.
+The USA build boots and plays: codegen runs clean, the game reaches gameplay
+with sound, controller and correct lighting.
+
+Changes on top of upstream:
+
+| Change | Where |
+|---|---|
+| Retarget to the USA disc (`454107F8`) | codegen on the USA `default.xex`, [`CMakeLists.txt`](CMakeLists.txt) |
+| Crash fix: the SDK's `InputSystem` has no lock, and parallel `XamInputGetState` / `GetCapabilities` / `SetState` calls freed its device list twice (heap corruption `0xC0000374` after seconds to minutes with a pad connected). The three guest XInput wrappers now run under one mutex. | [`src/game_fixes.h`](src/game_fixes.h) |
+| Lighting fix: `readback_resolve = "fast"` (UE3 HDR eye adaptation reads resolved render targets on the CPU; without it the image is washed out and tinted), `render_target_path_d3d12 = "rov"`, `gamma_render_target_as_unorm16 = true`, `resolution_scale = 1` | [`settings/hardware.toml`](settings/hardware.toml) |
+| Runtime debug tools (stub sweep, 97 MB missing-function scan) off by default | [`settings/hardware.toml`](settings/hardware.toml) |
 
 ## Requirements
 
@@ -153,6 +168,8 @@ reference and precedence rules.
 
 ## Credits
 
+- [nikolaygorb/ArmyOfTwoRecomp](https://github.com/nikolaygorb/ArmyOfTwoRecomp) -
+  the original project this repository is built on (Europe release)
 - [ReXGlue SDK](https://github.com/rexglue/rexglue-sdk) ([releases](https://github.com/rexglue/rexglue-sdk/releases))
 - [ABGX360](https://github.com/BakasuraRCE/abgx360) - used to dump the Xbox 360 disc
 - [extract-xiso](https://github.com/XboxDev/extract-xiso) ([releases](https://github.com/XboxDev/extract-xiso/releases)) -
@@ -162,5 +179,15 @@ reference and precedence rules.
 - [xenia-canary/game-patches](https://github.com/xenia-canary/game-patches) -
   source of the ported `ao2_fps_unlock` / `ao2_disable_msaa` /
   `ao2_anisotropic_16x` patches
+- [xenia-manager/optimized-settings](https://github.com/xenia-manager/optimized-settings) and
+  [xenia game-compatibility #167](https://github.com/xenia-project/game-compatibility/issues/167) -
+  the `readback_resolve` lighting fix for `454107F8`
 - [mdqinc/SDL_GameControllerDB](https://github.com/mdqinc/SDL_GameControllerDB) -
   `settings/gamecontrollerdb.txt`
+
+## License
+
+The upstream project does not declare a license, so its code stays under its
+author's copyright. Ask [nikolaygorb](https://github.com/nikolaygorb) before
+redistributing it outside GitHub's fork mechanism. Game files are not part of
+this repository and must come from your own disc.
