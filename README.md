@@ -41,7 +41,7 @@ Changes on top of upstream:
 | Change | Where |
 |---|---|
 | Retarget to the USA disc (`454107F8`) | codegen on the USA `default.xex`, [`CMakeLists.txt`](CMakeLists.txt) |
-| Crash fix: the SDK's `InputSystem` has no lock, and parallel `XamInputGetState` / `GetCapabilities` / `SetState` calls freed its device list twice (heap corruption `0xC0000374` after seconds to minutes with a pad connected). The three guest XInput wrappers now run under one mutex. | [`src/game_fixes.h`](src/game_fixes.h) |
+| Crash fix: the SDK's `InputSystem` has no lock, and parallel `XamInputGetState` / `GetCapabilities` / `SetState` calls can free its device list twice (caught once as heap corruption `0xC0000374`, ~45 s in, with a pad connected; the race is timing-dependent). The three guest XInput wrappers now run under one mutex. | [`src/game_fixes.h`](src/game_fixes.h) |
 | Lighting fix: `readback_resolve = "fast"` (UE3 HDR eye adaptation reads resolved render targets on the CPU; without it the image is washed out and tinted), `render_target_path_d3d12 = "rov"`, `gamma_render_target_as_unorm16 = true`, `resolution_scale = 1` | [`settings/hardware.toml`](settings/hardware.toml) |
 | Runtime debug tools (stub sweep, 97 MB missing-function scan) off by default | [`settings/hardware.toml`](settings/hardware.toml) |
 
