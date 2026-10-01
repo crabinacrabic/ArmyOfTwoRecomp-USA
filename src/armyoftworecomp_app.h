@@ -31,7 +31,7 @@ public:
       rex::ui::WindowedAppContext &ctx)
   {
     return std::unique_ptr<ArmyoftworecompApp>(new ArmyoftworecompApp(ctx, "armyoftworecomp",
-                                                                                  PPCImageConfig));
+                                                                      PPCImageConfig));
   }
 
   void OnPreSetup(rex::RuntimeConfig &config) override
@@ -51,9 +51,7 @@ public:
   // void OnLoadXexImage(std::string& xex_image) override {}
   void OnPostLoadXexImage() override
   {
-    game_patches::FpsUnlock();
-    game_patches::DisableMsaa();
-    game_patches::AnisotropicFiltering16x();
+    game_patches::ApplyEnabledPatches();
   }
 
   void OnPostSetup() override

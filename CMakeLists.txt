@@ -44,6 +44,8 @@ include(generated/rexglue.cmake)
 
 set(ARMYOFTWORECOMP_SOURCES
     src/main.cpp
+    src/game_patches.cpp
+    src/game_cvars.cpp
 )
 
 if(WIN32)

@@ -14,7 +14,7 @@ gpu_plugin = "xenos"
 # "d3d12" / "vulkan"
 graphics_backend = "any"
 vsync = false
-resolution_scale = 2
+resolution_scale = 1
 async_shader_compilation = true
 native_2x_msaa = false
 anisotropic_override = 3
@@ -61,6 +61,14 @@ headless = false
 log_level = "critical"
 
 gpu_allow_invalid_fetch_constants = true
+postprocess_ffx_cas_additional_sharpness = 1
+postprocess_ffx_fsr_max_upsampling_passes = 1
+use_dedicated_xma_thread = false
+xma_decoder = "new"
+mount_cache = true
+framerate_limit = 0
+d3d12_readback_resolve = true
+readback_resolve  = "fast"
 
 # Perf CSV log path (per-frame metrics). Empty = disabled.
 # Only works when REXGLUE_ENABLE_PERF_COUNTERS is defined (non-Release).
@@ -68,7 +76,7 @@ gpu_allow_invalid_fetch_constants = true
 
 # Enable runtime debug tools (stub sweep, missing function scan).
 # Produces logs/missed_functions.txt and logs/stub_sweep.txt.
-dev_debug_runtime = true
+dev_debug_runtime = false
 
 # Ported from xenia-canary game-patches for Army of Two (4541084C)
 # https://github.com/xenia-canary/game-patches/blob/main/patches/4541084C%20-%20Army%20of%20Two%20(Europe).patch.toml
