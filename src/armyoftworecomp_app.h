@@ -16,6 +16,7 @@
 #include "debug_tools.h"
 #include "game_cvars.h"
 #include "game_patches.h"
+#include "mouse/mouse_look.h"
 #include "utils.h"
 
 #ifdef REXGLUE_ENABLE_PERF_COUNTERS
@@ -98,13 +99,19 @@ public:
     utils::LoadSettingsFiles();
   }
 
+  void OnCreateDialogs(rex::ui::ImGuiDrawer *drawer) override
+  {
+    // Window exists from this point on; see src/mouse/mouse_look.h for why
+    // this alone doesn't do anything observable yet.
+    ao2::mouse::MouseLook::Get().Attach(window());
+  }
+
   // Override virtual hooks for customization:
   // void OnPostInitLogging() override {}
   // void OnPreSetup(rex::RuntimeConfig& config) override {}
   // void OnLoadXexImage(std::string& xex_image) override {}
   // void OnPostLoadXexImage() override {}
   // void OnPostSetup() override {}
-  // void OnCreateDialogs(rex::ui::ImGuiDrawer* drawer) override {}
   // std::unique_ptr<rex::ui::ImGuiDialog> CreateAchievementsOverlay() override;
   // std::unique_ptr<rex::ui::ImGuiDialog> CreateAchievementNotificationDialog() override;
   // void OnShutdown() override {}

@@ -52,8 +52,9 @@ d3d12_tessellation_wireframe = false
 render_target_path_vulkan = "fbo"
 vulkan_log_debug_messages = false
 vulkan_allow_present_mode_immediate = true
-vulkan_allow_present_mode_fifo_relaxed = false
+vulkan_allow_present_mode_fifo_relaxed = true
 vulkan_allow_present_mode_mailbox = false
+vulkan_pipeline_creation_threads = -1
 
 headless = false
 
