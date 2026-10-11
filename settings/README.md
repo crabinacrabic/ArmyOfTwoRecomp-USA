@@ -126,6 +126,7 @@ build actually ships with), not the SDK's compiled-in default.
 | `ao2_disable_msaa` | bool | `true` | Ported "Black Shading Fix". |
 | `ao2_anisotropic_16x` | bool | `false` | Ported "16x Anisotropic Filtering". |
 | `ao2_gpu_wait_mode` | int | `1` | Render-thread wait for command-buffer space: `0`=busy spin (original), `1`=yield, `2`=sleep 200us. Hot-reloadable. |
+| `user_language` | int | `1` | Game language: `1` English, `2` Japanese, `3` German, `4` French, `5` Spanish, `6` Italian. SDK cvar; the game reads it through `ExGetXConfigSetting`, and [`src/language_hook.cpp`](../src/language_hook.cpp) forces anything not on the disc back to English. Restart after changing it. |
 
 ## `mapping.toml` reference
 

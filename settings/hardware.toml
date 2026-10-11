@@ -88,3 +88,12 @@ ao2_anisotropic_16x = false
 
 # 0 = busy spin (original), 1 = yield the core
 ao2_gpu_wait_mode = 1
+
+# Xbox locale language:
+#  1 = English      2 = Japanese     3 = German      4 = French
+#  5 = Spanish      6 = Italian
+##
+# Only these six ship on the disc (assets/AO2Game/Localization/Coalesced.*);
+# anything else falls back to English. Restart after changing it.
+##
+user_language = 1

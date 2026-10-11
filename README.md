@@ -32,6 +32,10 @@ Project-side additions on top of the plain recompilation:
   the render thread yields instead of busy-spinning while it waits for
   command-buffer space (`ao2_gpu_wait_mode`).
 - Ported xenia-canary game patches (FPS unlock, MSAA fix, 16x AF).
+- **Language selection** ([`src/language_hook.cpp`](src/language_hook.cpp)) -
+  set `user_language` in [`settings/hardware.toml`](settings/hardware.toml)
+  (`1` English, `2` Japanese, `3` German, `4` French, `5` Spanish,
+  `6` Italian) and restart. Anything else falls back to English.
 
 ## Requirements
 
