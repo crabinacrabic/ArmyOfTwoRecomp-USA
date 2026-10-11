@@ -16,6 +16,7 @@
 #include "debug_tools.h"
 #include "game_cvars.h"
 #include "game_patches.h"
+#include "hardware_overlay.h"
 #include "utils.h"
 
 #ifdef REXGLUE_ENABLE_PERF_COUNTERS
@@ -75,8 +76,22 @@ public:
     }
   }
 
+  void OnCreateDialogs(rex::ui::ImGuiDrawer *drawer) override
+  {
+    if (drawer)
+    {
+      hardware_overlay_ = std::make_unique<rex::ui::HardwareMonitorOverlay>(drawer);
+      drawer->AddDialog(hardware_overlay_.get());
+    }
+  }
+
   void OnShutdown() override
   {
+    if (hardware_overlay_ && imgui_drawer())
+    {
+      imgui_drawer()->RemoveDialog(hardware_overlay_.get());
+      hardware_overlay_.reset();
+    }
 #ifdef REXGLUE_ENABLE_PERF_COUNTERS
     rex::perf::FlushCsv();
 #endif
@@ -118,4 +133,7 @@ public:
   // std::unique_ptr<rex::ui::ImGuiDialog> CreateAchievementNotificationDialog() override;
   // void OnShutdown() override {}
   // void OnConfigurePaths(rex::PathConfig& paths) override {}
+
+private:
+  std::unique_ptr<rex::ui::HardwareMonitorOverlay> hardware_overlay_;
 };

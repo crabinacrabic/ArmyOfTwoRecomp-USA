@@ -13,7 +13,7 @@ gpu_plugin = "xenos"
 # "any" (d3d12 - win default, vulkan - lin default)
 # "d3d12" / "vulkan"
 graphics_backend = "d3d12"
-vsync = false
+vsync = true
 # 1 = native 720p. At 2 the UE3 bloom / light shafts blow out (blinding light).
 resolution_scale = 1
 async_shader_compilation = true
@@ -86,7 +86,7 @@ dev_debug_runtime = false
 # "Unlock FPS": game speed is tied to FPS, kicks in above ~90FPS.
 ao2_fps_unlock = true
 # 0=unlimited, 1=60FPS, 2=30FPS. Only applies when ao2_fps_unlock is true.
-ao2_fps_unlock_mode = 1
+ao2_fps_unlock_mode = 2
 # "Black Shading Fix": disables MSAA.
 ao2_disable_msaa = true
 ao2_anisotropic_16x = false
