@@ -12,7 +12,7 @@ gpu_plugin = "xenos"
 
 # "any" (d3d12 - win default, vulkan - lin default)
 # "d3d12" / "vulkan"
-graphics_backend = "any"
+graphics_backend = "d3d12"
 vsync = false
 # 1 = native 720p. At 2 the UE3 bloom / light shafts blow out (blinding light).
 resolution_scale = 1
@@ -29,8 +29,8 @@ readback_memexport_fast = true
 # readback the exposure never settles and the image is washed out / overbright.
 # Same fix as xenia-manager's optimized settings for 454107F8 ("Fixes the
 # bright bloom"); xenia game-compatibility #167 is tagged gpu-readback.
-# none | fast (previous frame, no stalls) | some | full (sync, stalls)
 readback_resolve = "fast"
+d3d12_readback_resolve = true
 host_present_from_non_ui_thread	= true
 
 window_width = 1920
@@ -59,7 +59,7 @@ d3d12_queue_priority = 2
 d3d12_submit_on_primary_buffer_end = true
 d3d12_tessellation_wireframe = false
 
-render_target_path_vulkan = "fbo"
+render_target_path_vulkan = "fsi"
 vulkan_log_debug_messages = false
 vulkan_allow_present_mode_immediate = true
 vulkan_allow_present_mode_fifo_relaxed = false
