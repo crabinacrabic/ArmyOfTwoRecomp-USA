@@ -84,7 +84,7 @@ dev_debug_runtime = false
 # Ported from xenia-canary game-patches for Army of Two (4541084C)
 # https://github.com/xenia-canary/game-patches/blob/main/patches/4541084C%20-%20Army%20of%20Two%20(Europe).patch.toml
 # "Unlock FPS": game speed is tied to FPS, kicks in above ~90FPS.
-ao2_fps_unlock = true
+ao2_fps_unlock = false
 # 0=unlimited, 1=60FPS, 2=30FPS. Only applies when ao2_fps_unlock is true.
 ao2_fps_unlock_mode = 2
 # "Black Shading Fix": disables MSAA.
