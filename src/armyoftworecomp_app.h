@@ -91,6 +91,13 @@ public:
       paths.game_data_root = utils::RepoRoot() / "assets";
     }
 
+    // Mount update partition if available (Title Update / patch)
+    std::filesystem::path tu_path = utils::RepoRoot() / "archive_debug" / "tu_update";
+    if (std::filesystem::exists(tu_path))
+    {
+      paths.update_data_root = tu_path;
+    }
+
     // Hardware/rendering settings become the SDK's primary config file, so
     // the in-game Settings overlay's "Save to config" also lands here.
     paths.config_path = utils::SettingsDir() / "hardware.toml";
