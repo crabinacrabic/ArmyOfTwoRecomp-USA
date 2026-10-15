@@ -12,8 +12,8 @@ gpu_plugin = "xenos"
 
 # "any" (d3d12 - win default, vulkan - lin default)
 # "d3d12" / "vulkan"
-graphics_backend = "d3d12"
-vsync = true
+graphics_backend = "any"
+vsync = false
 # 1 = native 720p. At 2 the UE3 bloom / light shafts blow out (blinding light).
 resolution_scale = 1
 async_shader_compilation = true
@@ -62,8 +62,9 @@ d3d12_tessellation_wireframe = false
 render_target_path_vulkan = "fsi"
 vulkan_log_debug_messages = false
 vulkan_allow_present_mode_immediate = true
-vulkan_allow_present_mode_fifo_relaxed = false
+vulkan_allow_present_mode_fifo_relaxed = true
 vulkan_allow_present_mode_mailbox = false
+vulkan_pipeline_creation_threads = -1
 
 headless = false
 
@@ -71,14 +72,19 @@ headless = false
 log_level = "critical"
 
 gpu_allow_invalid_fetch_constants = true
+use_dedicated_xma_thread = false
+xma_decoder = "new"
+mount_cache = true
+framerate_limit = 0
+readback_resolve  = "fast"
 
 # Perf CSV log path (per-frame metrics). Empty = disabled.
 # Only works when REXGLUE_ENABLE_PERF_COUNTERS is defined (non-Release).
 #perf_log_csv = "benchmark.csv"
 
 # Enable runtime debug tools (stub sweep, missing function scan).
-# Produces logs/missed_functions.txt (~97 MB) and logs/stub_sweep.txt. Off by
-# default: the US build has never hit a stub, and the scan slows every start.
+# Produces logs/missed_functions.txt and logs/stub_sweep.txt. Off by
+# default: the scan slows every start.
 dev_debug_runtime = false
 
 # Ported from xenia-canary game-patches for Army of Two (4541084C)
@@ -90,3 +96,15 @@ ao2_fps_unlock_mode = 2
 # "Black Shading Fix": disables MSAA.
 ao2_disable_msaa = true
 ao2_anisotropic_16x = false
+
+# 0 = busy spin (original), 1 = yield the core
+ao2_gpu_wait_mode = 1
+
+# Xbox locale language:
+#  1 = English      2 = Japanese     3 = German      4 = French
+#  5 = Spanish      6 = Italian
+##
+# Only these six ship on the disc (assets/AO2Game/Localization/Coalesced.*);
+# anything else falls back to English. Restart after changing it.
+##
+user_language = 1

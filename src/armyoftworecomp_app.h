@@ -17,6 +17,7 @@
 #include "game_cvars.h"
 #include "game_patches.h"
 #include "hardware_overlay.h"
+#include "mouse/mouse_look.h"
 #include "utils.h"
 
 #ifdef REXGLUE_ENABLE_PERF_COUNTERS
@@ -32,7 +33,7 @@ public:
       rex::ui::WindowedAppContext &ctx)
   {
     return std::unique_ptr<ArmyoftworecompApp>(new ArmyoftworecompApp(ctx, "armyoftworecomp",
-                                                                                  PPCImageConfig));
+                                                                      PPCImageConfig));
   }
 
   void OnPreSetup(rex::RuntimeConfig &config) override
@@ -52,9 +53,7 @@ public:
   // void OnLoadXexImage(std::string& xex_image) override {}
   void OnPostLoadXexImage() override
   {
-    game_patches::FpsUnlock();
-    game_patches::DisableMsaa();
-    game_patches::AnisotropicFiltering16x();
+    game_patches::ApplyEnabledPatches();
   }
 
   void OnPostSetup() override
@@ -78,6 +77,11 @@ public:
 
   void OnCreateDialogs(rex::ui::ImGuiDrawer *drawer) override
   {
+    // Window exists from this point on. Direct mouse look (ao2_mouse_direct_look)
+    // only takes the mouse over while the camera hook in
+    // src/mouse/ao2_camera_hook.cpp is running; see src/mouse/mouse_look.h.
+    ao2::mouse::MouseLook::Get().Attach(window(), drawer);
+
     if (drawer)
     {
       hardware_overlay_ = std::make_unique<rex::ui::HardwareMonitorOverlay>(drawer);
@@ -128,7 +132,6 @@ public:
   // void OnLoadXexImage(std::string& xex_image) override {}
   // void OnPostLoadXexImage() override {}
   // void OnPostSetup() override {}
-  // void OnCreateDialogs(rex::ui::ImGuiDrawer* drawer) override {}
   // std::unique_ptr<rex::ui::ImGuiDialog> CreateAchievementsOverlay() override;
   // std::unique_ptr<rex::ui::ImGuiDialog> CreateAchievementNotificationDialog() override;
   // void OnShutdown() override {}
