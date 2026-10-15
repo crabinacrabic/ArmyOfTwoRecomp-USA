@@ -32,7 +32,9 @@ fullscreen = true
 monitor = 0
 resolution = "1920x1080"
 
-render_target_path_d3d12 = "rtv"
+render_target_path_d3d12 = "rov"
+d3d12_readback_resolve = true
+gamma_render_target_as_unorm16 = true
 store_shaders = true
 present_letterbox = true
   
